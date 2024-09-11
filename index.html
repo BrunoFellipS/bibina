@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contador de Tempo</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+    #container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      background-color: #f0f0f0;
+    }
+    #text {
+      font-size: 48px;
+      font-weight: bold;
+      color: #000; /* Texto preto */
+      background-color: #fff; /* Fundo branco do texto */
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="text">AMANDO A BIBINA HÁ 0 anos, 0 dias, 0 horas, 0 minutos e 0 segundos</div>
+  </div>
+  
+  <script>
+    const startDate = new Date('2020-05-13T00:00:00');
+
+    const colors = [
+      '#FFC0CB', '#FFB6C1', '#FF69B4', // Rosa
+      '#D8BFD8', '#DDA0DD', '#EE82EE', // Lilás
+      '#9370DB', '#8A2BE2', '#6A5ACD'  // Roxo
+    ];
+
+    function generateGradientColors(startColor, endColor, steps) {
+      const colorStep = (start, end, step) => Math.round(start + (end - start) * step);
+      const [r1, g1, b1] = startColor.match(/\w\w/g).map(c => parseInt(c, 16));
+      const [r2, g2, b2] = endColor.match(/\w\w/g).map(c => parseInt(c, 16));
+      
+      const gradientColors = [];
+      
+      for (let i = 0; i <= steps; i++) {
+        const step = i / steps;
+        const r = colorStep(r1, r2, step).toString(16).padStart(2, '0');
+        const g = colorStep(g1, g2, step).toString(16).padStart(2, '0');
+        const b = colorStep(b1, b2, step).toString(16).padStart(2, '0');
+        gradientColors.push(`#${r}${g}${b}`);
+      }
+      
+      return gradientColors;
+    }
+
+    function updateTime() {
+      const now = new Date();
+      const diff = now - startDate;
+
+      const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+      const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('text').textContent = `AMANDO A BIBINA HÁ ${years} anos, ${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos`;
+    }
+
+    function updateBackgroundColor() {
+      const container = document.getElementById('container');
+      const gradientColors = [];
+
+      for (let i = 0; i < colors.length - 1; i++) {
+        gradientColors.push(...generateGradientColors(colors[i], colors[i + 1], 10));
+      }
+
+      let colorIndex = 0;
+
+      setInterval(() => {
+        container.style.backgroundColor = gradientColors[colorIndex];
+        colorIndex = (colorIndex + 1) % gradientColors.length;
+      }, 1000); // Troca de cor a cada segundo
+    }
+
+    updateTime();
+    updateBackgroundColor();
+    setInterval(updateTime, 1000); // Atualiza o tempo a cada segundo
+  </script>
+</body>
+</html>
