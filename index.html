@@ -17,6 +17,7 @@
     }
     #container {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
@@ -27,7 +28,14 @@
       font-size: 48px;
       font-weight: bold;
       color: #000; /* Texto preto */
-      background-color: #fff; /* Fundo branco do texto */
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    #text2 {
+      font-size: 48px;
+      font-weight: bold;
+      color: #000; /* Texto preto */
       padding: 20px;
       border-radius: 10px;
       text-align: center;
@@ -36,7 +44,8 @@
 </head>
 <body>
   <div id="container">
-    <div id="text">AMANDO A BIBINA HÁ 0 anos, 0 dias, 0 horas, 0 minutos e 0 segundos</div>
+    <div id="text"></div>
+    <div id="text2"></div>
   </div>
   
   <script>
@@ -76,7 +85,8 @@
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-      document.getElementById('text').textContent = `AMANDO A BIBINA HÁ ${years} anos, ${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos`;
+      document.getElementById('text').textContent = `Fasendo cagada á ${years} anos, ${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos`;
+      document.getElementById('text2').textContent ='Sei que não mereço seu seu amor  e que ando decepcionando você e as pessoas ao meu redor, espero poder melhorar  e ser alguem melhor para você!'
     }
 
     function updateBackgroundColor() {
